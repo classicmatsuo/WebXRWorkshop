@@ -16,8 +16,19 @@ const material = new MeshPhongMaterial({
     specular: 0x222222,
     shininess: 25,
     bumpMap: bumpMap,
-    bumpScale: 10,
+    bumpScale: 50,
     map: texture,
+});
+const cloudMap = new TextureLoader().load("assets/images/globe/earthclouds4k.png");
+const materialClouds = new MeshPhongMaterial({
+    // color: 0xffff00 * Math.random(),
+    specular: 0x222222,
+    shininess: 25,
+    opacity: 0.8,
+    transparent: true,
+    // bumpMap: bumpMap,
+    // bumpScale: 50,
+    map: cloudMap,
 });
 // Geometry radius, width segment, height segment
 const geometry = new SphereGeometry(0.5, 14, 14).translate(0, 0.1, 0);
@@ -25,7 +36,9 @@ const geometry = new SphereGeometry(0.5, 14, 14).translate(0, 0.1, 0);
 //   color: 0xffff00 * Math.random(),
 //   // wireframe: true
 // });
+const cloudGeometry = new SphereGeometry(0.52, 14, 14).translate(0, 0.1, 0);
 const earth = new Mesh(geometry, material);
+const clouds = new Mesh(cloudGeometry, materialClouds);
 init();
 animate();
 function init() {
@@ -37,7 +50,9 @@ function init() {
     scene.add(light);
     window.addEventListener("resize", onWindowResize, false);
     earth.position.z = -2;
+    clouds.position.z = -2;
     scene.add(earth);
+    scene.add(clouds);
 }
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -49,6 +64,7 @@ function animate() {
     requestAnimationFrame(animate);
     // renderer.setAnimationLoop(animate);
     earth.rotation.y += 0.001;
+    clouds.rotation.y += 0.0015;
     render();
 }
 function render() {

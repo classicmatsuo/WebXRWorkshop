@@ -1,5 +1,5 @@
 import { Mesh, MeshBasicMaterial, MeshPhongMaterial, HemisphereLight, RingBufferGeometry, PerspectiveCamera, TextureLoader, Scene, SphereGeometry, WebGLRenderer } from "/build/three.module.js";
-
+import { VRButton } from '/jsm/webxr/vrbutton';
 // Scene
 const canvas = <HTMLCanvasElement> document.getElementById( "canvas" );
 const camera: PerspectiveCamera = new PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -42,7 +42,7 @@ animate();
 function init () {
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
-
+    document.body.appendChild( VRButton.createButton( renderer ) );
     // xr
     //renderer.xr.enabled = true;
 
